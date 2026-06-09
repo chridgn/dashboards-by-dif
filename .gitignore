@@ -1,0 +1,11 @@
+CLAUDE.md
+MEMORY.md
+
+# Environment
+src/.env
+
+# Python
+.venv/
+
+# Airflow logs
+src/airflow/logs/
