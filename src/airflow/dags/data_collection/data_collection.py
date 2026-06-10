@@ -5,6 +5,8 @@ from data_collection.jobs.fetch_bls_data import fetch_bls_data
 from data_collection.jobs.stage_bls_data import stage_bls_data
 from data_collection.jobs.transform_bls_data import transform_bls_data
 from data_collection.jobs.fetch_eia_data import fetch_eia_data
+from data_collection.jobs.stage_eia_data import stage_eia_data
+from data_collection.jobs.transform_eia_data import transform_eia_data
 
 
 @dag(
@@ -31,8 +33,11 @@ def data_collection():
     transform_bls_data(staging_id)
     is_monthly() >> raw
 
-    # EIA pipeline (weekly)
-    is_weekly() >> fetch_eia_data()
+    # EIA pipeline: fetch → stage → transform (weekly)
+    eia_raw = fetch_eia_data()
+    eia_staging_id = stage_eia_data(eia_raw)
+    transform_eia_data(eia_staging_id)
+    is_weekly() >> eia_raw
 
 
 data_collection()

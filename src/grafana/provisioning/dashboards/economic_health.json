@@ -2,7 +2,7 @@
   "title": "Dashboards by Dif",
   "uid": "economic-health",
   "schemaVersion": 42,
-  "version": 1,
+  "version": 2,
   "editable": true,
   "graphTooltip": 1,
   "time": { "from": "now-30y", "to": "now" },
@@ -138,7 +138,7 @@
     },
     {
       "id": 3,
-      "title": "Gasoline Price (per gallon)",
+      "title": "Gasoline Price - National Average (BLS)",
       "description": "Average retail price per gallon of regular unleaded gasoline across U.S. cities, collected monthly by the BLS. Gas prices are one of the most visible and psychologically impactful costs in daily life - they affect not just your commute but also the price of shipped goods, groceries, and services. They're heavily influenced by crude oil prices, refinery capacity, seasonal blending requirements, and geopolitical events. A sharp spike here often foreshadows broader inflation a few months later.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
@@ -447,6 +447,199 @@
           "editorMode": "code",
           "format": "table",
           "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'CUUR0000SAM1' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    }
+    ,
+    {
+      "id": 8,
+      "title": "California Gasoline Price (per gallon)",
+      "description": "Weekly retail price for regular unleaded gasoline in California, reported every Monday by the Energy Information Administration. California consistently ranks among the most expensive states for gas due to its unique fuel blend requirements (CARB-reformulated gasoline reduces smog but costs more to produce), higher state and local taxes, and limited pipeline connections to refineries outside the state. Weekly data captures price swings much faster than the monthly BLS national average, so this panel shows what you are actually paying at the pump right now. Compare it to the national average panel above to see how much of a California premium you are carrying.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 56, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "purple", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "currencyUSD",
+          "displayName": "CA Gas ($/gal)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'EIA_GAS_CA' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "California Electricity Price (per kWh)",
+      "description": "Average retail price per kilowatthour paid by California residential customers, reported monthly by the EIA. California electricity prices are consistently among the highest in the continental U.S., driven by the state's aggressive renewable energy mandates, aging transmission infrastructure, and utility wildfire liability costs that get passed directly to ratepayers. This is the rate reflected on your PG&E, SCE, or SDG&E bill. Even if your usage stays flat, a rising price here means your bill quietly grows every year. The long-term upward slope on this chart is one of the clearest pictures of how energy policy translates into household expenses.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 64, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "light-blue", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "currencyUSD",
+          "displayName": "Electricity ($/kWh)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'EIA_ELEC_CA' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "California Natural Gas Price (per MCF)",
+      "description": "Average price per thousand cubic feet (MCF) of natural gas delivered to California residential customers, reported monthly by the EIA. Natural gas heats roughly half of California homes and is used for cooking, water heating, and clothes drying - making it a significant and often overlooked line item in household budgets. California prices fluctuate with national supply levels and local pipeline constraints, and tend to spike sharply in winter when heating demand is high. The dramatic peaks visible on this chart can translate to a utility bill that jumps by hundreds of dollars in a single month. When natural gas prices stay elevated for multiple months, it compounds quickly.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 72, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "dark-orange", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "currencyUSD",
+          "displayName": "Natural Gas ($/MCF)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'EIA_NATGAS_CA' ORDER BY metric_time",
           "refId": "A",
           "sql": {
             "columns": [{ "parameters": [], "type": "function" }],
