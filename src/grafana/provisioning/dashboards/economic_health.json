@@ -1,0 +1,460 @@
+{
+  "title": "Dashboards by Dif",
+  "uid": "economic-health",
+  "schemaVersion": 42,
+  "version": 1,
+  "editable": true,
+  "graphTooltip": 1,
+  "time": { "from": "now-30y", "to": "now" },
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Overall Inflation (CPI-U)",
+      "description": "The CPI-U tracks how much a standard basket of goods and services costs over time for urban consumers — roughly 93% of the U.S. population. The index is set to 100 for the 1982–84 baseline, so a value of 314 today means that basket costs 3.14× what it did 40 years ago. When this line rises steeply, your dollar buys less of everything. When it flattens, prices are stabilizing. This is the single broadest measure of inflation affecting your daily life.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "short",
+          "displayName": "CPI-U"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'CUUR0000SA0' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Unemployment Rate",
+      "description": "The percentage of people in the labor force who are actively looking for work but don't have a job. It's seasonally adjusted to remove predictable swings (like holiday hiring) so the underlying trend is clearer. Historically, anything under ~5% is considered healthy. Spikes — like the one in 2020 — signal economic shocks that ripple into wages, benefits, and job security. Even if you're employed, a rising unemployment rate usually means less leverage to negotiate raises or switch jobs.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "red", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "percent",
+          "displayName": "Unemployment %"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'LNS14000000' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Gasoline Price (per gallon)",
+      "description": "Average retail price per gallon of regular unleaded gasoline across U.S. cities, collected monthly by the BLS. Gas prices are one of the most visible and psychologically impactful costs in daily life — they affect not just your commute but also the price of shipped goods, groceries, and services. They're heavily influenced by crude oil prices, refinery capacity, seasonal blending requirements, and geopolitical events. A sharp spike here often foreshadows broader inflation a few months later.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "orange", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "currencyUSD",
+          "displayName": "Gas ($/gal)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'APU000074714' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Egg Prices (per dozen)",
+      "description": "Average retail price per dozen Grade A large eggs, collected monthly by the BLS. Eggs have become a cultural bellwether for food inflation — cheap to produce in stable times, but extremely volatile when supply chains are disrupted. The dramatic spikes you'll see in recent years are largely driven by avian flu outbreaks that wiped out millions of laying hens, sharply reducing supply. Egg prices are a good proxy for how stressed the food supply chain is at any given moment.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 24, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "yellow", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "currencyUSD",
+          "displayName": "Eggs ($/doz)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'APU0000708111' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Beef Prices (per lb)",
+      "description": "Average retail price per pound of uncooked ground beef (all types), collected monthly by the BLS. Beef is one of the pricier staples in an American grocery cart, and its price reflects the full cost of the agricultural supply chain — feed costs, fuel for transport, labor at processing plants, and retail markups. It tends to rise with general inflation but can spike independently during drought years (which reduce cattle herd sizes) or supply chain disruptions. A long-term upward trend here means your grocery bill is quietly growing.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 32, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "dark-red", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "currencyUSD",
+          "displayName": "Beef ($/lb)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'APU0000703112' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Shelter / Rent Index",
+      "description": "The BLS shelter index measures the cost of housing over time — it covers rent paid by renters and an equivalent estimated rent for homeowners (called 'owners' equivalent rent'). Like the overall CPI, it's indexed to 100 in 1982–84. Shelter is typically the largest single expense in a household budget, and this index rising faster than wages is the clearest signal that housing affordability is getting worse. It tends to lag real-world rent changes by 6–12 months because leases are slow to turn over.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 40, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "blue", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "short",
+          "displayName": "Shelter Index"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'CUUR0000SAH1' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Medical Care Index",
+      "description": "The BLS medical care index tracks the cost of health-related goods and services over time — including doctor visits, hospital stays, prescription drugs, and health insurance. Indexed to 100 in 1982–84, it has historically risen faster than overall inflation, reflecting the structural cost pressures in the U.S. healthcare system. This matters even if you have insurance: rising medical costs feed directly into higher premiums, larger deductibles, and out-of-pocket expenses over time.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 48, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "green", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }]
+          },
+          "unit": "short",
+          "displayName": "Medical Index"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true,
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'CUUR0000SAM1' ORDER BY metric_time",
+          "refId": "A",
+          "sql": {
+            "columns": [{ "parameters": [], "type": "function" }],
+            "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
+            "limit": 50
+          }
+        }
+      ]
+    }
+  ]
+}

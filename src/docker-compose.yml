@@ -91,5 +91,23 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
+  grafana:
+    image: grafana/grafana-oss:latest
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   postgres_data:
+  grafana_data:
