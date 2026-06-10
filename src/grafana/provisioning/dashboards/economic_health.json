@@ -2,7 +2,7 @@
   "title": "Dashboards by Dif",
   "uid": "economic-health",
   "schemaVersion": 42,
-  "version": 2,
+  "version": 3,
   "editable": true,
   "graphTooltip": 1,
   "time": { "from": "now-30y", "to": "now" },
@@ -646,6 +646,216 @@
             "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }],
             "limit": 50
           }
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Federal Funds Rate",
+      "description": "The interest rate at which banks lend money to each other overnight, set by the Federal Reserve. This is the Fed's primary lever for controlling the economy — raising it slows spending and fights inflation, lowering it stimulates growth during downturns. Every other interest rate you encounter (credit cards, car loans, mortgages, savings accounts) moves roughly in the same direction as this one. The sharp drops on this chart mark the Fed's emergency responses to crises: the dot-com bust in 2001, the financial crisis in 2008, and the pandemic in 2020. The aggressive rise from 2022 to 2023 was the fastest rate-hiking cycle in 40 years, aimed squarely at bringing down the post-pandemic inflation surge.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 80, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "dark-green", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text",
+            "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "barWidthFactor": 0.6,
+            "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false, "lineInterpolation": "linear", "lineWidth": 2, "pointSize": 5,
+            "scaleDistribution": { "type": "linear" }, "showPoints": "auto", "showValues": false,
+            "spanNulls": false, "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }] },
+          "unit": "percent",
+          "displayName": "Fed Funds Rate (%)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true, "editorMode": "code", "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'FEDFUNDS' ORDER BY metric_time",
+          "refId": "A",
+          "sql": { "columns": [{ "parameters": [], "type": "function" }], "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }], "limit": 50 }
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "30-Year Fixed Mortgage Rate",
+      "description": "The interest rate on a 30-year fixed-rate home mortgage, surveyed weekly by Freddie Mac. This single number determines housing affordability more than any other — when it is low, the same monthly payment buys a far more expensive house; when it spikes, buyers get priced out and the market freezes. It tracks closely with the 10-year Treasury yield, which in turn responds to Fed policy and inflation expectations. The near-zero rates of 2020-2021 supercharged home prices by making borrowing almost free. The rapid rise to 7-8% in 2022-2023 was the fastest affordability shock in modern history, effectively locking millions of existing homeowners in place because selling meant giving up a 3% rate for a 7% one.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 88, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "dark-blue", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text",
+            "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "barWidthFactor": 0.6,
+            "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false, "lineInterpolation": "linear", "lineWidth": 2, "pointSize": 5,
+            "scaleDistribution": { "type": "linear" }, "showPoints": "auto", "showValues": false,
+            "spanNulls": false, "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }] },
+          "unit": "percent",
+          "displayName": "Mortgage Rate (%)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true, "editorMode": "code", "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'MORTGAGE30US' ORDER BY metric_time",
+          "refId": "A",
+          "sql": { "columns": [{ "parameters": [], "type": "function" }], "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }], "limit": 50 }
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Real Disposable Personal Income",
+      "description": "Total personal income across all Americans after taxes, adjusted for inflation using 2012 as the base year. Values are in billions of chained 2012 dollars. The word 'real' is the important one here — inflation has been stripped out, so this chart shows whether households actually have more purchasing power over time, not just whether dollar amounts grew. A rising line means people can buy more; a falling line means they are falling behind even if their paychecks look bigger. The dramatic spike in 2020-2021 reflects the pandemic stimulus payments that temporarily boosted incomes far above the long-term trend — and the sharp drop after reflects their expiration as prices stayed elevated.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 96, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "light-green", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text",
+            "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "barWidthFactor": 0.6,
+            "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false, "lineInterpolation": "linear", "lineWidth": 2, "pointSize": 5,
+            "scaleDistribution": { "type": "linear" }, "showPoints": "auto", "showValues": false,
+            "spanNulls": false, "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }] },
+          "unit": "short",
+          "displayName": "Real Disp. Income ($B)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true, "editorMode": "code", "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'DSPIC96' ORDER BY metric_time",
+          "refId": "A",
+          "sql": { "columns": [{ "parameters": [], "type": "function" }], "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }], "limit": 50 }
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Consumer Sentiment (U. Michigan)",
+      "description": "A monthly survey by the University of Michigan asking Americans how they feel about their personal finances and the broader economy — both right now and over the next year. The index was anchored at 100 in 1966; values above roughly 90 signal general optimism, values below 70 suggest widespread worry. This is a leading indicator: when people feel anxious about the economy, they pull back on spending before the official economic data catches up. The drops on this chart reliably precede or coincide with recessions and inflation shocks. The 2022 reading — which hit its lowest level since the survey began — reflected a population simultaneously dealing with 40-year-high inflation and rising interest rates.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 104, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "dark-purple", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text",
+            "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "barWidthFactor": 0.6,
+            "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false, "lineInterpolation": "linear", "lineWidth": 2, "pointSize": 5,
+            "scaleDistribution": { "type": "linear" }, "showPoints": "auto", "showValues": false,
+            "spanNulls": false, "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }] },
+          "unit": "short",
+          "displayName": "Consumer Sentiment"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true, "editorMode": "code", "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'UMCSENT' ORDER BY metric_time",
+          "refId": "A",
+          "sql": { "columns": [{ "parameters": [], "type": "function" }], "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }], "limit": 50 }
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "M2 Money Supply",
+      "description": "A broad measure of how much money exists in the U.S. economy, in billions of dollars. M2 includes physical cash, checking and savings accounts, and money market funds. The Federal Reserve influences M2 primarily through bond purchases (quantitative easing, which injects money) and bond sales (quantitative tightening, which removes it). When M2 grows rapidly, more dollars are chasing the same amount of goods and services, which tends to push prices higher. The extraordinary surge in 2020-2021 — the fastest M2 growth since World War II, driven by pandemic stimulus and Fed bond buying — is widely cited as a primary cause of the inflation wave that followed. The subsequent flattening and slight decline in 2022-2023 reflects the Fed reversing course.",
+      "type": "timeseries",
+      "pluginVersion": "13.0.2",
+      "gridPos": { "x": 0, "y": 112, "w": 24, "h": 8 },
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "dark-yellow", "mode": "fixed" },
+          "custom": {
+            "axisBorderShow": false, "axisCenteredZero": false, "axisColorMode": "text",
+            "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "barWidthFactor": 0.6,
+            "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false, "lineInterpolation": "linear", "lineWidth": 2, "pointSize": 5,
+            "scaleDistribution": { "type": "linear" }, "showPoints": "auto", "showValues": false,
+            "spanNulls": false, "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 80 }] },
+          "unit": "short",
+          "displayName": "M2 ($B)"
+        }
+      },
+      "options": {
+        "annotations": { "clustering": -1, "multiLane": false },
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+      },
+      "targets": [
+        {
+          "dataset": "dashboard",
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
+          "rawQuery": true, "editorMode": "code", "format": "table",
+          "rawSql": "SELECT metric_time::timestamptz AS \"time\", value FROM metrics.economic_indicators WHERE series_id = 'M2SL' ORDER BY metric_time",
+          "refId": "A",
+          "sql": { "columns": [{ "parameters": [], "type": "function" }], "groupBy": [{ "property": { "type": "string" }, "type": "groupBy" }], "limit": 50 }
         }
       ]
     }

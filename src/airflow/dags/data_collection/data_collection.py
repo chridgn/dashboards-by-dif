@@ -7,6 +7,9 @@ from data_collection.jobs.transform_bls_data import transform_bls_data
 from data_collection.jobs.fetch_eia_data import fetch_eia_data
 from data_collection.jobs.stage_eia_data import stage_eia_data
 from data_collection.jobs.transform_eia_data import transform_eia_data
+from data_collection.jobs.fetch_fred_data import fetch_fred_data
+from data_collection.jobs.stage_fred_data import stage_fred_data
+from data_collection.jobs.transform_fred_data import transform_fred_data
 
 
 @dag(
@@ -33,11 +36,18 @@ def data_collection():
     transform_bls_data(staging_id)
     is_monthly() >> raw
 
-    # EIA pipeline: fetch → stage → transform (weekly)
+    # EIA + FRED pipelines share the weekly gate
+    weekly = is_weekly()
+
     eia_raw = fetch_eia_data()
     eia_staging_id = stage_eia_data(eia_raw)
     transform_eia_data(eia_staging_id)
-    is_weekly() >> eia_raw
+    weekly >> eia_raw
+
+    fred_raw = fetch_fred_data()
+    fred_staging_id = stage_fred_data(fred_raw)
+    transform_fred_data(fred_staging_id)
+    weekly >> fred_raw
 
 
 data_collection()
