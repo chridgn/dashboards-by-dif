@@ -1,6 +1,8 @@
 # Dashboards by Dif
 
-A personal economic health dashboard. Answers the question: *"How is the economy affecting my life right now?"*
+I was tired of having to visit different sites and news outlets for economic indicators so I decided to build a custom dashboard where I could add datasets of interest whenever I liked.
+
+The resulting dashboard is available at <link> for anyone curious.
 
 ## Data Sources
 
@@ -22,3 +24,11 @@ A personal economic health dashboard. Answers the question: *"How is the economy
 | Consumer sentiment index | Federal Reserve (FRED) | fred.stlouisfed.org/docs/api | Monthly |
 | M2 money supply | Federal Reserve (FRED) | fred.stlouisfed.org/docs/api | Monthly |
 | Credit card interest rate | Federal Reserve (FRED) | fred.stlouisfed.org/docs/api | Monthly |
+
+## The Stack
+
+This project involves a lean DE pipeline that uses an Airflow DAG to pull metrics from public APIs and ingests this data into Postgres. Raw data is landed in a staging table before being deduped and flattened into a mart-style table that is exposed via timescaledb postgres extension. A grafana dashboard then graphs the metrics so I can view them with my cats.
+
+As for deployment, docker-compose on a single EC2 (t2.small) was enough for a workload of this size.
+
+To see how the stack was defined and built, see src/docker-compose.yml
