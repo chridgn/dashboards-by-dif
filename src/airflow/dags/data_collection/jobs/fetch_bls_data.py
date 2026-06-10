@@ -25,7 +25,6 @@ def fetch_bls_data():
     # Running on the 1st, we query M-1 to ensure the data is published.
     target = logical_date.subtract(months=1)
     year = str(target.year)
-    period = f"M{target.month:02d}"
 
     payload = {
         "seriesid": SERIES_IDS,
@@ -41,15 +40,4 @@ def fetch_bls_data():
     if result["status"] != "REQUEST_SUCCEEDED":
         raise ValueError(f"BLS API error: {result['message']}")
 
-    records = []
-    for series in result["Results"]["series"]:
-        match = next((p for p in series["data"] if p["period"] == period), None)
-        if match:
-            records.append({
-                "series_id": series["seriesID"],
-                "year": int(match["year"]),
-                "period": match["period"],
-                "value": float(match["value"]),
-            })
-
-    return records
+    return result

@@ -2,6 +2,8 @@ import pendulum
 from airflow.decorators import dag, task
 from airflow.operators.python import get_current_context
 from data_collection.jobs.fetch_bls_data import fetch_bls_data
+from data_collection.jobs.stage_bls_data import stage_bls_data
+from data_collection.jobs.transform_bls_data import transform_bls_data
 from data_collection.jobs.fetch_eia_data import fetch_eia_data
 
 
@@ -23,7 +25,13 @@ def data_collection():
         ctx = get_current_context()
         return ctx["logical_date"].weekday() == 0  # Monday
 
-    is_monthly() >> fetch_bls_data()
+    # BLS pipeline: fetch → stage → transform
+    raw = fetch_bls_data()
+    staging_id = stage_bls_data(raw)
+    transform_bls_data(staging_id)
+    is_monthly() >> raw
+
+    # EIA pipeline (weekly)
     is_weekly() >> fetch_eia_data()
 
 
