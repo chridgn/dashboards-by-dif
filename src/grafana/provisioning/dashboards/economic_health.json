@@ -9,12 +9,24 @@
   "timezone": "browser",
   "panels": [
     {
+      "id": 100,
+      "title": "",
+      "type": "text",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 5 },
+      "options": {
+        "mode": "markdown",
+        "code": { "language": "plaintext", "showLineNumbers": false, "showMiniMap": false },
+        "content": "## Dashboards by Dif — Personal Economic Health Dashboard\n\n github.com/chridgn/dashboards-by-dif \n\n After being tired of checking across multiple sources to obtain the following information, I decided to aggregate it all in one spot thanks to opendata and other government sources. \n\n This dashboard is powered by a daily Airflow job that polls specific APIs and ingests into a postgres db with timescaledb extension. \n\n The dashboard will likely become sort of a visualization hub for any DE projects that I work on over the coming weeks"
+      },
+      "transparent": false
+    },
+    {
       "id": 1,
       "title": "Overall Inflation (CPI-U)",
       "description": "The CPI-U tracks how much a standard basket of goods and services costs over time for urban consumers - roughly 93% of the U.S. population. The index is set to 100 for the 1982-84 baseline, so a value of 314 today means that basket costs 3.14× what it did 40 years ago. When this line rises steeply, your dollar buys less of everything. When it flattens, prices are stabilizing. This is the single broadest measure of inflation affecting your daily life.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -78,7 +90,7 @@
       "description": "The percentage of people in the labor force who are actively looking for work but don't have a job. It's seasonally adjusted to remove predictable swings (like holiday hiring) so the underlying trend is clearer. Historically, anything under ~5% is considered healthy. Spikes - like the one in 2020 - signal economic shocks that ripple into wages, benefits, and job security. Even if you're employed, a rising unemployment rate usually means less leverage to negotiate raises or switch jobs.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 13, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -142,7 +154,7 @@
       "description": "Average retail price per gallon of regular unleaded gasoline across U.S. cities, collected monthly by the BLS. Gas prices are one of the most visible and psychologically impactful costs in daily life - they affect not just your commute but also the price of shipped goods, groceries, and services. They're heavily influenced by crude oil prices, refinery capacity, seasonal blending requirements, and geopolitical events. A sharp spike here often foreshadows broader inflation a few months later.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 21, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -206,7 +218,7 @@
       "description": "Average retail price per dozen Grade A large eggs, collected monthly by the BLS. Eggs have become a cultural bellwether for food inflation - cheap to produce in stable times, but extremely volatile when supply chains are disrupted. The dramatic spikes you'll see in recent years are largely driven by avian flu outbreaks that wiped out millions of laying hens, sharply reducing supply. Egg prices are a good proxy for how stressed the food supply chain is at any given moment.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 24, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 29, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -270,7 +282,7 @@
       "description": "Average retail price per pound of uncooked ground beef (all types), collected monthly by the BLS. Beef is one of the pricier staples in an American grocery cart, and its price reflects the full cost of the agricultural supply chain - feed costs, fuel for transport, labor at processing plants, and retail markups. It tends to rise with general inflation but can spike independently during drought years (which reduce cattle herd sizes) or supply chain disruptions. A long-term upward trend here means your grocery bill is quietly growing.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 32, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 37, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -334,7 +346,7 @@
       "description": "The BLS shelter index measures the cost of housing over time - it covers rent paid by renters and an equivalent estimated rent for homeowners (called 'owners' equivalent rent'). Like the overall CPI, it's indexed to 100 in 1982-84. Shelter is typically the largest single expense in a household budget, and this index rising faster than wages is the clearest signal that housing affordability is getting worse. It tends to lag real-world rent changes by 6-12 months because leases are slow to turn over.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 40, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 45, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -398,7 +410,7 @@
       "description": "The BLS medical care index tracks the cost of health-related goods and services over time - including doctor visits, hospital stays, prescription drugs, and health insurance. Indexed to 100 in 1982-84, it has historically risen faster than overall inflation, reflecting the structural cost pressures in the U.S. healthcare system. This matters even if you have insurance: rising medical costs feed directly into higher premiums, larger deductibles, and out-of-pocket expenses over time.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 48, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 53, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -463,7 +475,7 @@
       "description": "Weekly retail price for regular unleaded gasoline in California, reported every Monday by the Energy Information Administration. California consistently ranks among the most expensive states for gas due to its unique fuel blend requirements (CARB-reformulated gasoline reduces smog but costs more to produce), higher state and local taxes, and limited pipeline connections to refineries outside the state. Weekly data captures price swings much faster than the monthly BLS national average, so this panel shows what you are actually paying at the pump right now. Compare it to the national average panel above to see how much of a California premium you are carrying.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 56, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 61, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -527,7 +539,7 @@
       "description": "Average retail price per kilowatthour paid by California residential customers, reported monthly by the EIA. California electricity prices are consistently among the highest in the continental U.S., driven by the state's aggressive renewable energy mandates, aging transmission infrastructure, and utility wildfire liability costs that get passed directly to ratepayers. This is the rate reflected on your PG&E, SCE, or SDG&E bill. Even if your usage stays flat, a rising price here means your bill quietly grows every year. The long-term upward slope on this chart is one of the clearest pictures of how energy policy translates into household expenses.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 64, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 69, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -591,7 +603,7 @@
       "description": "Average price per thousand cubic feet (MCF) of natural gas delivered to California residential customers, reported monthly by the EIA. Natural gas heats roughly half of California homes and is used for cooking, water heating, and clothes drying - making it a significant and often overlooked line item in household budgets. California prices fluctuate with national supply levels and local pipeline constraints, and tend to spike sharply in winter when heating demand is high. The dramatic peaks visible on this chart can translate to a utility bill that jumps by hundreds of dollars in a single month. When natural gas prices stay elevated for multiple months, it compounds quickly.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 72, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 77, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -655,7 +667,7 @@
       "description": "The interest rate at which banks lend money to each other overnight, set by the Federal Reserve. This is the Fed's primary lever for controlling the economy — raising it slows spending and fights inflation, lowering it stimulates growth during downturns. Every other interest rate you encounter (credit cards, car loans, mortgages, savings accounts) moves roughly in the same direction as this one. The sharp drops on this chart mark the Fed's emergency responses to crises: the dot-com bust in 2001, the financial crisis in 2008, and the pandemic in 2020. The aggressive rise from 2022 to 2023 was the fastest rate-hiking cycle in 40 years, aimed squarely at bringing down the post-pandemic inflation surge.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 80, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 85, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -697,7 +709,7 @@
       "description": "The interest rate on a 30-year fixed-rate home mortgage, surveyed weekly by Freddie Mac. This single number determines housing affordability more than any other — when it is low, the same monthly payment buys a far more expensive house; when it spikes, buyers get priced out and the market freezes. It tracks closely with the 10-year Treasury yield, which in turn responds to Fed policy and inflation expectations. The near-zero rates of 2020-2021 supercharged home prices by making borrowing almost free. The rapid rise to 7-8% in 2022-2023 was the fastest affordability shock in modern history, effectively locking millions of existing homeowners in place because selling meant giving up a 3% rate for a 7% one.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 88, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 93, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -739,7 +751,7 @@
       "description": "Total personal income across all Americans after taxes, adjusted for inflation using 2012 as the base year. Values are in billions of chained 2012 dollars. The word 'real' is the important one here — inflation has been stripped out, so this chart shows whether households actually have more purchasing power over time, not just whether dollar amounts grew. A rising line means people can buy more; a falling line means they are falling behind even if their paychecks look bigger. The dramatic spike in 2020-2021 reflects the pandemic stimulus payments that temporarily boosted incomes far above the long-term trend — and the sharp drop after reflects their expiration as prices stayed elevated.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 96, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 101, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -781,7 +793,7 @@
       "description": "A monthly survey by the University of Michigan asking Americans how they feel about their personal finances and the broader economy — both right now and over the next year. The index was anchored at 100 in 1966; values above roughly 90 signal general optimism, values below 70 suggest widespread worry. This is a leading indicator: when people feel anxious about the economy, they pull back on spending before the official economic data catches up. The drops on this chart reliably precede or coincide with recessions and inflation shocks. The 2022 reading — which hit its lowest level since the survey began — reflected a population simultaneously dealing with 40-year-high inflation and rising interest rates.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 104, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 109, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
@@ -823,7 +835,7 @@
       "description": "A broad measure of how much money exists in the U.S. economy, in billions of dollars. M2 includes physical cash, checking and savings accounts, and money market funds. The Federal Reserve influences M2 primarily through bond purchases (quantitative easing, which injects money) and bond sales (quantitative tightening, which removes it). When M2 grows rapidly, more dollars are chasing the same amount of goods and services, which tends to push prices higher. The extraordinary surge in 2020-2021 — the fastest M2 growth since World War II, driven by pandemic stimulus and Fed bond buying — is widely cited as a primary cause of the inflation wave that followed. The subsequent flattening and slight decline in 2022-2023 reflects the Fed reversing course.",
       "type": "timeseries",
       "pluginVersion": "13.0.2",
-      "gridPos": { "x": 0, "y": 112, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 117, "w": 24, "h": 8 },
       "datasource": { "type": "grafana-postgresql-datasource", "uid": "dashboard_db" },
       "fieldConfig": {
         "defaults": {
