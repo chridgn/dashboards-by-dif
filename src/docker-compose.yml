@@ -59,7 +59,7 @@ services:
           --firstname Admin \
           --lastname User \
           --role Admin \
-          --email ${AIRFLOW_WWW_EMAIL}
+          --email ${AIRFLOW_WWW_EMAIL} || echo "User creation failed or user already exists, continuing..."
     restart: on-failure
 
   airflow-webserver:
