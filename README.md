@@ -2,7 +2,7 @@
 
 I was tired of having to visit different sites and news outlets for economic indicators so I decided to build a custom dashboard where I could add datasets of interest whenever I liked.
 
-The resulting dashboard is available at <link> for anyone curious.
+The resulting dashboard is available at dashboards.chridgn.dev for anyone curious.
 
 ## Data Sources
 
