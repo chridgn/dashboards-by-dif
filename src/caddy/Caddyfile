@@ -1,0 +1,4 @@
+dashboards.{$DOMAIN} {
+    redir / /d/economic-health?kiosk
+    reverse_proxy grafana:3000
+}
